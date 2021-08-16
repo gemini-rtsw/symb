@@ -1,0 +1,65 @@
+Gemini Update May 2017
+----------------------
+1. Review the symbApp/Makefile
+2. Notice the use of the library being build called 'Symb'.
+3. Review the testApp/src/Makefile
+4. Focus strictly on the use of the testInit PROD.
+   a. Review testInit.c
+   b. Review testInit.syms.cpp
+   c. Review how the use of global variables can be defined in an EPICS database.
+      * See testApp/Db for example, but note the variables need to be changed
+   d. In your application, you need to define the symbols like testInit.syms.cpp
+   e. Also, include the Symb library and DBD file in your Makefile
+   f. Now you should have application code that modified these global variables.
+   g. Add a camonitor to the respective variables as defined in your database.
+
+
+
+----------------------
+Copyright (c) 1991-2010 UChicago Argonne LLC, as Operator of Argonne
+National Laboratory.
+Copyright (c) 1991-2004 The Regents of the University of California, as
+Operator of Los Alamos National Laboratory.
+
+This software is distributed subject to a Software License Agreement found
+in the file LICENSE that is included with this distribution. 
+
+		README file for the devSymb module
+		----------------------------------
+
+This EPICS module contains the vxWorks global variable device support. This
+version has been built on R3.14.11 but should work on releases back to
+R3.14.6 and probably earlier.
+
+Hypertext documentation is installed into the html directory on building.
+
+The following source files are provided (Makefiles not listed):
+
+README			This file
+LICENSE			License terms for this EPICS module
+symbApp/
+    devAiSymb.c		Device support for various record types
+    devAoSymb.c
+    devBiSymb.c
+    devBoSymb.c
+    devLiSymb.c
+    devLoSymb.c
+    devMbbiSymb.c
+    devMbboSymb.c
+    devSiSymb.c
+    devSoSymb.c
+    devWfSymb.c
+
+    symb.dbd		device() entries for the above support files
+
+    devSymbFind.c	Utility routines for parsing INST_IO parm strings
+			(includes a conditionally compiled test routine)
+
+    devSymb.html	HTML documentation
+
+testApp/
+    src/
+	devSymbTest.c	Defines globals and a routine for test (needs update)
+    Db/
+	symb.db		Test database (for use with devSymbTest.c)
+

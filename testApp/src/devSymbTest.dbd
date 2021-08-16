@@ -1,0 +1,4 @@
+variable(symbTestRunning, int)
+variable(testDoubleScalar, double)
+
+registrar(symbTestRegisterCommands)
