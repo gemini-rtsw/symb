@@ -13,8 +13,20 @@
 
 #define epicsExportSharedSymbols
 #include "devSymb.h"
+#include <epicsTypes.h>
 
-static int sizeofTypes[] = {MAX_STRING_SIZE,1,1,2,2,4,4,4,8,2};
+static int sizeofTypes[] = {MAX_STRING_SIZE,	 // String 
+			    sizeof(epicsInt8),   // Char
+			    sizeof(epicsUInt8), // Unsigned char
+		            sizeof(epicsInt16),  // Short
+			    sizeof(epicsUInt16), // Unsigned short
+			    sizeof(epicsInt32),  // Long
+			    sizeof(epicsUInt32),  // Unsigned Long
+			    sizeof(epicsInt64),  // Long Long
+			    sizeof(epicsUInt64),  // Unsigned Long Long
+			    sizeof(epicsFloat32),  // Float
+			    sizeof(epicsFloat64),  // Double
+			    sizeof(epicsEnum16)};  // ENUM
 
 static long init_record(struct waveformRecord *prec) {
     if (devSymbFind(&prec->inp, &prec->dpvt)) {
@@ -30,9 +42,10 @@ static long read_wf(struct waveformRecord *prec) {
     if (priv) {
         int typesize = sizeofTypes[prec->ftvl];
         int lockKey = epicsInterruptLock();
+	/* fprintf(stderr,"read_wf: bptr=%p ppvar=%p TS=%d nelm=%d index=%ld FTVL=%d \n",prec->bptr,priv->ppvar,typesize,prec->nelm,priv->index,prec->ftvl); */
         memcpy(prec->bptr,
                (char *)(*priv->ppvar) + typesize * priv->index, 
-               prec->nelm * typesize);
+               prec->nelm * typesize); 
         epicsInterruptUnlock(lockKey);
         prec->nord = prec->nelm; /* We always get it all */
         return 0;
